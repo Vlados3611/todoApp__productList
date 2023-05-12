@@ -125,18 +125,18 @@ export const App: React.FC = () => {
 
   return (
     <div className="App">
-      <h1
-        className="App__title"
-      >
-        Add todo form
-      </h1>
-
       <form
         className="App__form form"
         onSubmit={onAdd}
         action="/api/users"
         method="POST"
       >
+        <h1
+          className="App__title"
+        >
+          Add todo form
+        </h1>
+
         {isTitleTouched && (
           <span className="error">Please enter a title</span>
         )}

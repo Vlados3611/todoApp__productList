@@ -3,7 +3,7 @@
 .TodoInfo {
   display: flex;
   position: relative;
-  min-width: 300px;
+  min-width: 330px;
   flex-grow: 1;
   padding: 8px;
   margin: 12px 10px;
@@ -101,8 +101,11 @@
 
 .btn {
   &-success-check {
+    display: flex;
+    align-items: center;
     border-radius: 50%;
     margin: 0 5px;
+    padding: 3px 12.5px;
   }
 
   &-success-submit {

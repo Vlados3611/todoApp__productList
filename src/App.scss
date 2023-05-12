@@ -19,7 +19,10 @@ button {
 }
 
 body {
-  background-color: rgb(246, 246, 246);
+  background: linear-gradient(90deg,
+  rgba(232,241,240,1) 25%,
+  rgba(229,242,242,1) 50%,
+  rgba(232,241,240,1) 75%);
 }
 
 .App {
@@ -31,9 +34,11 @@ body {
   border-radius: 5px;
 
   &__title {
+    position: relative;
     font-size: 35px;
     text-align: center;
     color: rgb(237, 189, 34);
+    padding: 2px 8px;
   }
 
   &__form {
