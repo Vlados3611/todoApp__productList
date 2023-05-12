@@ -1,0 +1,125 @@
+@import './mixins.scss';
+
+iframe {
+  display: none;
+}
+
+html {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+label,
+button {
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  animation: sectionOpened 0.8s;
+}
+
+body {
+  background-color: rgb(246, 246, 246);
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: max-content;
+  padding: 10px 0;
+  border-radius: 5px;
+
+  &__title {
+    font-size: 35px;
+    text-align: center;
+    color: rgb(237, 189, 34);
+  }
+
+  &__form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(254, 254, 254);
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgb(239, 239, 239);
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 1px;
+      bottom: -5px;
+
+      width: 100%;
+      height: 100%;
+      padding: 8px;
+      background-color: rgb(255, 255, 255);
+      border-radius: 8px;
+      border: 1px solid #ebebeb;
+      z-index: -1;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 1px;
+      bottom: -10px;
+
+      width: 100%;
+      height: 100%;
+      padding: 8px;
+      background-color: rgb(255, 255, 255);
+      border-radius: 8px;
+      border: 1px solid #ebebeb;
+      z-index: -1;
+    }
+  }
+}
+
+.form {
+  &__textInput {
+    @include formInputs;
+    padding: 8px 10px;
+    min-width: 300px;
+    margin-bottom: 10px;
+  }
+
+  &__selectColor {
+    @include formInputs;
+    min-width: 300px;
+    padding: 8px 0 8px 10px;
+  }
+
+  @media (min-width: 550px) {
+    &__textInput {
+      min-width: 500px;
+      padding: 8px 10px;
+    }
+
+    &__selectColor {
+      min-width: 500px;
+      padding: 5px 0 5px 10px;
+    }
+  }
+}
+
+.btn {
+  &-outline-danger {
+    margin: 0 10px 0;
+  }
+
+  &-todoAdd {
+    min-width: 300px;
+    min-height: 45px;
+
+    margin: 15px 0 0;
+
+    @media (min-width: 550px) {
+      & {
+        min-width: 500px;
+      }
+    }
+  }
+}

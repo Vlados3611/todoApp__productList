@@ -1,0 +1,124 @@
+@import '../../mixins.scss';
+
+.TodoInfo {
+  display: flex;
+  position: relative;
+  min-width: 300px;
+  flex-grow: 1;
+  padding: 8px;
+  margin: 12px 10px;
+  border: 1px solid #ebebeb;
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 1px;
+    bottom: -7px;
+
+    width: 100%;
+    height: 53px;
+    padding: 8px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    border: 1px solid #ebebeb;
+    z-index: -1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 1px;
+    bottom: -4px;
+
+    width: 100%;
+    height: 53px;
+    padding: 8px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    border: 1px solid #ebebeb;
+    z-index: -1;
+  }
+
+  &__title {
+    margin: 4px 0;
+    font-size: inherit;
+    padding: 5px 0 0 10px;
+
+    &-selected {
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+  }
+
+  &--completed &__title {
+    color: #080;
+  }
+
+  &-submitForm {
+    display: flex;
+    flex-grow: 1;
+  }
+
+  &-section {
+    @include sectionsPosition;
+    animation: sectionOpened 0.8s;
+  }
+
+  &__checkbox-section {
+    display: flex;
+  }
+
+  &-edit {
+    @include sectionsPosition;
+    animation: sectionOpened 0.8s;
+
+    &__input {
+      max-width: 150px;
+      @include editInputs;
+      padding: 0 10px;
+    }
+
+    &__select {
+      max-width: 80px;
+      @include editInputs;
+      margin-left: 5px;
+    }
+
+    &__section {
+      display: flex;
+      flex-direction: row;
+    }
+  };
+
+  @media (min-width: 750px) {
+    & {
+      min-width: 750px;
+    }
+  }
+}
+
+.btn {
+  &-success-check {
+    border-radius: 50%;
+    margin: 0 5px;
+  }
+
+  &-success-submit {
+    margin-left: 10px;
+  }
+}
+
+.error-border {
+  border: 1px solid rgb(204, 52, 52);
+}
+
+@keyframes sectionOpened {
+  from {
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+}
+
