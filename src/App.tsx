@@ -112,12 +112,13 @@ export const App: React.FC = () => {
 
   const changeAllProducts = (selected: boolean) => {
     setProducts((prevState: Product[]) => prevState.map(
-      (product: Product) => (
-        {
-          ...product,
-          selected,
+      (product: Product) => {
+        if (product.selected === selected) {
+          return product;
         }
-      ),
+
+        return { ...product, selected };
+      },
     ));
   };
 
@@ -162,7 +163,7 @@ export const App: React.FC = () => {
         <h1
           className="App__title"
         >
-          Add todo form
+          Product List
         </h1>
 
         {isTitleTouched && (
