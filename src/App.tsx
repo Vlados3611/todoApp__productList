@@ -1,4 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
+
+import classNames from 'classnames';
 
 import './App.scss';
 
@@ -12,12 +14,19 @@ import { TodoList } from './components/TodoList/TodoList';
 import { Product } from './types/Product';
 import { Color } from './types/Color';
 
+enum SortType {
+  SELECTED,
+  NONE,
+}
+
 export const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>(productsFromServer);
   const [todoTitle, setTodoTitle] = useState('');
   const [todoColor, setTodoColor] = useState('');
   const [titleTouch, setTitleTouch] = useState(false);
   const [productTouch, setColorTouch] = useState(false);
+
+  const [sortType, setSortType] = useState(SortType.NONE);
 
   const isTitleTouched = titleTouch && todoTitle.length < 1;
   const isColorTouched = productTouch && todoColor.length < 1;
@@ -31,15 +40,11 @@ export const App: React.FC = () => {
   };
 
   const addTodoTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    setTodoTitle(value);
+    setTodoTitle(event.target.value);
   };
 
-  const addTodoProduct = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = event.target;
-
-    setTodoColor(value);
+  const addTodoColor = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setTodoColor(event.target.value);
   };
 
   const removeTodoChanges = () => {
@@ -116,12 +121,35 @@ export const App: React.FC = () => {
     ));
   };
 
-  const fitleredProducts = useMemo(() => (
-    products.map((product: Product): Product => ({
+  const getFilteredProducts = (
+    productList: Product[],
+    sortBy: SortType,
+  ): Product[] => {
+    const sortedProductList = productList.map((product: Product) => ({
       ...product,
       currentColor: findColorById(product.colorId),
-    }))
-  ), [products]);
+    }));
+
+    switch (sortBy) {
+      case SortType.SELECTED:
+        return sortedProductList.filter((product: Product) => (
+          product.selected
+        ));
+
+      default:
+        return sortedProductList;
+    }
+  };
+
+  const sortBySelect = () => {
+    setSortType(SortType.SELECTED);
+  };
+
+  const showAll = () => {
+    setSortType(SortType.NONE);
+  };
+
+  const fitleredProducts = getFilteredProducts(products, sortType);
 
   return (
     <div className="App">
@@ -143,7 +171,13 @@ export const App: React.FC = () => {
 
         <div className="field">
           <input
-            className="form__textInput form-control"
+            className={classNames(
+              'form__textInput',
+              'form-control',
+              {
+                'error-border': isTitleTouched,
+              },
+            )}
             type="text"
             data-cy="titleInput"
             value={todoTitle}
@@ -155,22 +189,28 @@ export const App: React.FC = () => {
         </div>
 
         {(isColorTouched) && (
-          <span className="error">Please choose a product</span>
+          <span className="error">Please choose a color</span>
         )}
 
         <div className="field">
           <select
-            className="form__selectColor form-control"
+            className={classNames(
+              'form__selectColor',
+              'form-control',
+              {
+                'error-border': isColorTouched,
+              },
+            )}
             data-cy="userSelect"
             value={todoColor}
-            onChange={addTodoProduct}
+            onChange={addTodoColor}
             onBlur={() => setColorTouch(true)}
           >
             <option
               value=""
               disabled
             >
-              Choose a product
+              Choose a color
             </option>
 
             {colorsFromServer.map((currentColor) => (
@@ -201,6 +241,8 @@ export const App: React.FC = () => {
         onRename={onRename}
         onSelect={onSelect}
         changeAll={changeAllProducts}
+        sortBySelect={sortBySelect}
+        showAll={showAll}
       />
     </div>
   );

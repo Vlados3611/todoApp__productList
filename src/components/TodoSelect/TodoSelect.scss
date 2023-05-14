@@ -2,12 +2,10 @@
 
 $TodoSelect-height: 60px;
 
+
 .TodoSelect {
-  display: flex;
-  justify-content: space-between;
+  @include flexColumn;
   min-width: 300px;
-  max-height: $TodoSelect-height;
-  flex-grow: 1;
   padding: 8px;
   margin: 20px 10px 12px 10px;
   border: 1px solid #ebebeb;
@@ -15,10 +13,21 @@ $TodoSelect-height: 60px;
   background-color: rgb(255, 255, 255);
   box-shadow: 1px 3px 6px rgb(241, 241, 241);
 
+  &__section {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+  }
+
+  &__selectButtons {
+    display: flex;
+    justify-content: center;
+  }
+
   &__title {
     font-size: 16px;
     margin: auto 0;
-    padding: 5px 10px 5px 10px;
+    padding: 5px 10px;
     background-color: rgb(241, 241, 241);
     border-radius: 5px;
     transition: 0.2s;
@@ -30,11 +39,13 @@ $TodoSelect-height: 60px;
     }
   }
 
-  @media (max-width: 420px) {
+  @media (max-width: 430px) {
     & {
       flex-direction: column;
-      align-items: center;
-      max-height: max-content;
+
+      &__section {
+        flex-direction: column;
+      }
 
       &__title {
         margin: 10px 0 0;

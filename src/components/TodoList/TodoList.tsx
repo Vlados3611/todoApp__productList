@@ -14,6 +14,8 @@ type Props = {
   onRename: (productId: number, title: string, colorId: number) => void;
   onSelect: (productId: number, selected: boolean) => void;
   changeAll: (selected: boolean) => void;
+  sortBySelect: () => void;
+  showAll: () => void;
 };
 
 export const TodoList: React.FC<Props> = React.memo(
@@ -24,12 +26,16 @@ export const TodoList: React.FC<Props> = React.memo(
     onRename,
     onSelect,
     changeAll,
+    sortBySelect,
+    showAll,
   }) => {
     return (
       <section className="TodoList">
         <TodoSelect
           products={products}
           changeAll={changeAll}
+          sortBySelect={sortBySelect}
+          showAll={showAll}
         />
         {products.map((product) => (
           <TodoInfo

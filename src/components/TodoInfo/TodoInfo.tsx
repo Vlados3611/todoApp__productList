@@ -60,15 +60,11 @@ export const TodoInfo: React.FC<Props> = React.memo(
     };
 
     const addRenameTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const { value } = event.target;
-
-      setRenameTitle(value);
+      setRenameTitle(event.target.value);
     };
 
     const addRenameColor = (event: React.ChangeEvent<HTMLSelectElement>) => {
-      const { value } = event.target;
-
-      setRenameColor(value);
+      setRenameColor(event.target.value);
     };
 
     const changeSelect = () => {
@@ -123,7 +119,7 @@ export const TodoInfo: React.FC<Props> = React.memo(
                     className="btn btn-outline-danger"
                     onClick={() => onDelete(product.id)}
                   >
-                    Delete
+                    &#10005;
                   </button>
                   {
                     !selected && (
@@ -132,7 +128,7 @@ export const TodoInfo: React.FC<Props> = React.memo(
                         className="btn btn-outline-warning"
                         onClick={() => setEdited((prevState => !prevState))}
                       >
-                        Edit
+                        &#9998;
                       </button>
                     )
                   }
@@ -195,7 +191,7 @@ export const TodoInfo: React.FC<Props> = React.memo(
                     type="submit"
                     className="btn btn-outline-success btn-success-submit"
                   >
-                    Done
+                    &#10003;
                   </button>
                 </article>
               </form>
