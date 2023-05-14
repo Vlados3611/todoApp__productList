@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import './TodoFilter.scss';
-import { Product } from '../types/Product';
 
-type Props = {
-  products: Product[];
-  sortBySelect: () => void;
-  showAll: () => void;
-};
+import { ProductContext } from '../ProductContext';
 
-export const TodoFilter: React.FC<Props> = ({
-  products,
-  sortBySelect,
-  showAll,
-}) => {
+export const TodoFilter: React.FC = () => {
+  const {
+    products,
+    sortBySelect,
+    showAll,
+  } = useContext(ProductContext);
+
   const [filterToggler, switchFilterToggler] = useState(false);
   const [touchedSelect, setTouchSelect] = useState(false);
 

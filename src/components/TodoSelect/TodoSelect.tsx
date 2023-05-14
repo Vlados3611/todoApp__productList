@@ -1,25 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import classNames from 'classnames';
 
 import './TodoSelect.scss';
 
-import { Product } from '../../types/Product';
 import { TodoFilter } from '../../TodoFilter/TodoFilter';
 
-type Props = {
-  products: Product[];
-  changeAll: (selected: boolean) => void;
-  sortBySelect: () => void;
-  showAll: () => void;
-};
+import { ProductContext } from '../../ProductContext';
 
-export const TodoSelect: React.FC<Props> = ({
-  products,
-  changeAll,
-  sortBySelect,
-  showAll,
-}) => {
+export const TodoSelect: React.FC = () => {
+  const {
+    products,
+    changeAll,
+  } = useContext(ProductContext);
+
   const [productsList, setProductToList] = useState(products);
 
   const fitleredProductsBySelect = productsList.filter((product) => (
@@ -68,11 +62,8 @@ export const TodoSelect: React.FC<Props> = ({
             {`Selected items: ${productsList.length}`}
           </p>
         </section>
-        <TodoFilter
-          products={products}
-          sortBySelect={sortBySelect}
-          showAll={showAll}
-        />
+
+        <TodoFilter />
       </article>
     </>
   );

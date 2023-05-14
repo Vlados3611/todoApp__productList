@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import classNames from 'classnames';
 
 import './TodoInfo.scss';
 
-import { Product } from '../../types/Product';
-import { Color } from '../../types/Color';
+import { TodoListContext } from '../TodoList/TodoListContext';
+import { ProductContext } from '../../ProductContext';
 
-type Props = {
+/* type Props = {
   product: Product;
   colors: Color[];
   onDelete: (productId: number) => void;
   onRename: (productId: number, title: string, colorId: number) => void;
   onSelect: (productId: number, selected: boolean) => void;
-};
+}; */
 
-export const TodoInfo: React.FC<Props> = React.memo(
-  ({
-    product,
-    colors,
-    onDelete,
-    onRename,
-    onSelect,
-  }) => {
-    const { currentColor, selected } = product;
+export const TodoInfo: React.FC = React.memo(
+  () => {
+    const { product, colors } = useContext(TodoListContext);
+    const {
+      id,
+      title,
+      selected,
+      colorId,
+      currentColor,
+    } = product;
 
-    const [renameTitle, setRenameTitle] = useState<string>(product.title);
+    const { onDelete, onRename, onSelect } = useContext(ProductContext);
+
+    const [renameTitle, setRenameTitle] = useState<string>(title);
     const [renameColor, setRenameColor] = useState<string>(
-      product.colorId.toString(),
+      colorId.toString(),
     );
     const [isEdited, setEdited] = useState(false);
 
@@ -47,7 +50,7 @@ export const TodoInfo: React.FC<Props> = React.memo(
 
       if (renameTitle.length > 0
         && renameColor.length > 0) {
-        onRename(product.id, renameTitle, Number(renameColor));
+        onRename(id, renameTitle, Number(renameColor));
         setEdited(prevState => !prevState);
 
         resetAllChanges();
@@ -68,7 +71,7 @@ export const TodoInfo: React.FC<Props> = React.memo(
     };
 
     const changeSelect = () => {
-      onSelect(product.id, !selected);
+      onSelect(id, !selected);
     };
 
     useEffect(() => {
@@ -78,9 +81,9 @@ export const TodoInfo: React.FC<Props> = React.memo(
 
     return (
       <article
-        data-id={product.id}
+        data-id={id}
         className="TodoInfo"
-        key={product.id}
+        key={id}
       >
 
         {
@@ -91,13 +94,13 @@ export const TodoInfo: React.FC<Props> = React.memo(
                   <input
                     type="checkbox"
                     className="btn-check"
-                    id={`$btn-check-${product.id}-outlined`}
-                    onClick={changeSelect}
+                    id={`$btn-check-${id}-outlined`}
+                    onChange={changeSelect}
                     checked={selected}
                   />
                   <label
                     className="btn btn-outline-success btn-success-check"
-                    htmlFor={`$btn-check-${product.id}-outlined`}
+                    htmlFor={`$btn-check-${id}-outlined`}
                   >
                     &#10003;
                   </label>
@@ -110,14 +113,14 @@ export const TodoInfo: React.FC<Props> = React.memo(
                     )}
                     style={currentColor && { color: currentColor.color }}
                   >
-                    {product.title}
+                    {title}
                   </h2>
                 </section>
                 <section>
                   <button
                     type="button"
                     className="btn btn-outline-danger"
-                    onClick={() => onDelete(product.id)}
+                    onClick={() => onDelete(id)}
                   >
                     &#10005;
                   </button>

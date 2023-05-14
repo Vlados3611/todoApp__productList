@@ -4,8 +4,6 @@ import classNames from 'classnames';
 
 import './App.scss';
 
-// import usersFromServer from './api/users';
-// import todosFromServer from './api/todos';
 import productsFromServer from './api/products';
 import colorsFromServer from './api/colors';
 
@@ -13,6 +11,8 @@ import { TodoList } from './components/TodoList/TodoList';
 
 import { Product } from './types/Product';
 import { Color } from './types/Color';
+
+import { ProductContext } from './ProductContext';
 
 enum SortType {
   SELECTED,
@@ -152,6 +152,17 @@ export const App: React.FC = () => {
 
   const fitleredProducts = getFilteredProducts(products, sortType);
 
+  const value = {
+    products: fitleredProducts,
+    colors: colorsFromServer,
+    onDelete,
+    onRename,
+    onSelect,
+    changeAll: changeAllProducts,
+    sortBySelect,
+    showAll,
+  };
+
   return (
     <div className="App">
       <form
@@ -235,16 +246,9 @@ export const App: React.FC = () => {
         </button>
       </form>
 
-      <TodoList
-        products={fitleredProducts}
-        colors={colorsFromServer}
-        onDelete={onDelete}
-        onRename={onRename}
-        onSelect={onSelect}
-        changeAll={changeAllProducts}
-        sortBySelect={sortBySelect}
-        showAll={showAll}
-      />
+      <ProductContext.Provider value={value}>
+        <TodoList />
+      </ProductContext.Provider>
     </div>
   );
 };
