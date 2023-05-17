@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import classNames from 'classnames';
 
@@ -78,69 +78,79 @@ export const App: React.FC = () => {
     }
   };
 
-  const onDelete = (productId: number): void => {
-    setProducts((prevState) => prevState.filter((state) => (
-      state.id !== productId
-    )));
-  };
+  const onDelete = useCallback(
+    (productId: number): void => {
+      setProducts((prevState) => prevState.filter((state) => (
+        state.id !== productId
+      )));
+    }, [],
+  );
 
-  const onRename = (
-    productId: number,
-    title: string,
-    colorId: number,
-  ): void => {
-    setProducts((prevState) => prevState.map((product) => {
-      if (product.id !== productId) {
-        return product;
-      }
-
-      return { ...product, title, colorId };
-    }));
-  };
-
-  const onSelect = (productId: number, selected: boolean): void => {
-    setProducts((prevState: Product[]) => prevState.map(
-      (product) => {
+  const onRename = useCallback(
+    (
+      productId: number,
+      title: string,
+      colorId: number,
+    ): void => {
+      setProducts((prevState) => prevState.map((product) => {
         if (product.id !== productId) {
           return product;
         }
 
-        return { ...product, selected };
-      },
-    ));
-  };
+        return { ...product, title, colorId };
+      }));
+    }, [],
+  );
 
-  const changeAllProducts = (selected: boolean) => {
-    setProducts((prevState: Product[]) => prevState.map(
-      (product: Product) => {
-        if (product.selected === selected) {
-          return product;
-        }
+  const onSelect = useCallback(
+    (productId: number, selected: boolean): void => {
+      setProducts((prevState: Product[]) => prevState.map(
+        (product) => {
+          if (product.id !== productId) {
+            return product;
+          }
 
-        return { ...product, selected };
-      },
-    ));
-  };
+          return { ...product, selected };
+        },
+      ));
+    }, [],
+  );
 
-  const getFilteredProducts = (
-    productList: Product[],
-    sortBy: SortType,
-  ): Product[] => {
-    const sortedProductList = productList.map((product: Product) => ({
-      ...product,
-      currentColor: findColorById(product.colorId),
-    }));
+  const changeAllProducts = useCallback(
+    (selected: boolean) => {
+      setProducts((prevState: Product[]) => prevState.map(
+        (product: Product) => {
+          if (product.selected === selected) {
+            return product;
+          }
 
-    switch (sortBy) {
-      case SortType.SELECTED:
-        return sortedProductList.filter((product: Product) => (
-          product.selected
-        ));
+          return { ...product, selected };
+        },
+      ));
+    }, [],
+  );
 
-      default:
-        return sortedProductList;
-    }
-  };
+  const getFilteredProducts = useCallback(
+    (
+      productList: Product[],
+      sortBy: SortType,
+    ): Product[] => {
+      const sortedProductList = productList.map((product: Product) => ({
+        ...product,
+        currentColor: findColorById(product.colorId),
+      }));
+
+      switch (sortBy) {
+        case SortType.SELECTED:
+          return sortedProductList.filter((product: Product) => (
+            product.selected
+          ));
+
+        default:
+          return sortedProductList;
+      }
+    }, [products, sortType],
+  );
 
   const sortBySelect = () => {
     setSortType(SortType.SELECTED);

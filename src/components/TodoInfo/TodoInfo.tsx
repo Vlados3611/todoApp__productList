@@ -7,14 +7,6 @@ import './TodoInfo.scss';
 import { TodoListContext } from '../TodoList/TodoListContext';
 import { ProductContext } from '../../ProductContext';
 
-/* type Props = {
-  product: Product;
-  colors: Color[];
-  onDelete: (productId: number) => void;
-  onRename: (productId: number, title: string, colorId: number) => void;
-  onSelect: (productId: number, selected: boolean) => void;
-}; */
-
 export const TodoInfo: React.FC = React.memo(
   () => {
     const { product, colors } = useContext(TodoListContext);

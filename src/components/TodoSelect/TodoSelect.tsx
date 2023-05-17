@@ -34,7 +34,9 @@ export const TodoSelect: React.FC = () => {
             <button
               type="button"
               className="btn btn-outline-success"
-              onClick={() => changeAll(true)}
+              onClick={() => {
+                changeAll(true);
+              }}
               disabled={
                 fitleredProductsBySelect.length === products.length
               }
