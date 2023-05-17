@@ -32,11 +32,6 @@ export const TodoInfo: React.FC = React.memo(
     const isTitleTouched = titleTouch && renameTitle.length < 1;
     const isColorTouched = colorTouch && renameColor.length < 1;
 
-    const resetAllChanges = () => {
-      setRenameTitle('');
-      setRenameColor('');
-    };
-
     const onRenameSubmit = (event: React.FormEvent): void => {
       event.preventDefault();
 
@@ -45,7 +40,6 @@ export const TodoInfo: React.FC = React.memo(
         onRename(id, renameTitle, Number(renameColor));
         setEdited(prevState => !prevState);
 
-        resetAllChanges();
         setTitleTouch(false);
         setColorTouch(false);
       } else {
@@ -67,9 +61,12 @@ export const TodoInfo: React.FC = React.memo(
     };
 
     useEffect(() => {
-      setRenameTitle(product.title);
-      setRenameColor(product.colorId.toString());
-    }, [product]);
+      setRenameTitle(title);
+    }, [product.title]);
+
+    useEffect(() => {
+      setRenameColor(colorId.toString());
+    }, [product.colorId]);
 
     return (
       <article

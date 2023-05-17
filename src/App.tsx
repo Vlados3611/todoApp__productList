@@ -55,8 +55,14 @@ export const App: React.FC = () => {
   const onAdd = (event: React.FormEvent): void => {
     event.preventDefault();
 
+    const addMaxId = (
+      products.length !== 0
+        ? Math.max(...products.map((product) => product.id))
+        : 0
+    );
+
     const newProduct = {
-      id: Math.max(...products.map((product) => product.id)) + 1,
+      id: addMaxId + 1,
       title: todoTitle,
       selected: false,
       colorId: Number(todoColor),
