@@ -21,15 +21,15 @@ enum SortType {
 
 export const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>(productsFromServer);
-  const [todoTitle, setTodoTitle] = useState('');
-  const [todoColor, setTodoColor] = useState('');
-  const [titleTouch, setTitleTouch] = useState(false);
-  const [productTouch, setColorTouch] = useState(false);
+  const [todoTitle, setTodoTitle] = useState<string>('');
+  const [todoColor, setTodoColor] = useState<string>('');
+  const [titleTouch, setTitleTouch] = useState<boolean>(false);
+  const [productTouch, setColorTouch] = useState<boolean>(false);
 
-  const [sortType, setSortType] = useState(SortType.NONE);
+  const [sortType, setSortType] = useState<SortType>(SortType.NONE);
 
-  const isTitleTouched = titleTouch && todoTitle.length < 1;
-  const isColorTouched = productTouch && todoColor.length < 1;
+  const isTitleTouched: boolean = titleTouch && todoTitle.length < 1;
+  const isColorTouched: boolean = productTouch && todoColor.length < 1;
 
   const findColorById = (colorId: number): Color | undefined => {
     const foundColor = colorsFromServer.find((color) => (
@@ -136,27 +136,25 @@ export const App: React.FC = () => {
     }, [],
   );
 
-  const getFilteredProducts = useCallback(
-    (
-      productList: Product[],
-      sortBy: SortType,
-    ): Product[] => {
-      const sortedProductList = productList.map((product: Product) => ({
-        ...product,
-        currentColor: findColorById(product.colorId),
-      }));
+  const getFilteredProducts = (
+    productList: Product[],
+    sortBy: SortType,
+  ): Product[] => {
+    const sortedProductList = productList.map((product: Product) => ({
+      ...product,
+      currentColor: findColorById(product.colorId),
+    }));
 
-      switch (sortBy) {
-        case SortType.SELECTED:
-          return sortedProductList.filter((product: Product) => (
-            product.selected
-          ));
+    switch (sortBy) {
+      case SortType.SELECTED:
+        return sortedProductList.filter((product: Product) => (
+          product.selected
+        ));
 
-        default:
-          return sortedProductList;
-      }
-    }, [products, sortType],
-  );
+      default:
+        return sortedProductList;
+    }
+  };
 
   const sortBySelect = () => {
     setSortType(SortType.SELECTED);
@@ -166,7 +164,7 @@ export const App: React.FC = () => {
     setSortType(SortType.NONE);
   };
 
-  const fitleredProducts = getFilteredProducts(products, sortType);
+  const fitleredProducts: Product[] = getFilteredProducts(products, sortType);
 
   const value = {
     products: fitleredProducts,

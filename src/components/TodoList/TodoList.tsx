@@ -8,6 +8,8 @@ import { TodoSelect } from '../TodoSelect/TodoSelect';
 import { ProductContext } from '../../ProductContext';
 import { TodoListContext } from './TodoListContext';
 
+import { Product } from '../../types/Product';
+
 export const TodoList: React.FC = React.memo(
   () => {
     const { products, colors } = useContext(ProductContext);
@@ -19,7 +21,7 @@ export const TodoList: React.FC = React.memo(
         <TodoSelect />
 
         {
-          products.map((product) => (
+          products.map((product: Product) => (
             <TodoListContext.Provider value={{ product, colors }}>
               <TodoInfo
                 key={product.id}

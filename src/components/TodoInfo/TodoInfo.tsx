@@ -24,10 +24,10 @@ export const TodoInfo: React.FC = React.memo(
     const [renameColor, setRenameColor] = useState<string>(
       colorId.toString(),
     );
-    const [isEdited, setEdited] = useState(false);
+    const [isEdited, setEdited] = useState<boolean>(false);
 
-    const [titleTouch, setTitleTouch] = useState(false);
-    const [colorTouch, setColorTouch] = useState(false);
+    const [titleTouch, setTitleTouch] = useState<boolean>(false);
+    const [colorTouch, setColorTouch] = useState<boolean>(false);
 
     const isTitleTouched = titleTouch && renameTitle.length < 1;
     const isColorTouched = colorTouch && renameColor.length < 1;

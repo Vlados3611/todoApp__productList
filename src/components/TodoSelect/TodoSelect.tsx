@@ -7,6 +7,7 @@ import './TodoSelect.scss';
 import { TodoFilter } from '../../TodoFilter/TodoFilter';
 
 import { ProductContext } from '../../ProductContext';
+import { Product } from '../../types/Product';
 
 export const TodoSelect: React.FC = () => {
   const {
@@ -14,15 +15,17 @@ export const TodoSelect: React.FC = () => {
     changeAll,
   } = useContext(ProductContext);
 
-  const [productsList, setProductToList] = useState(products);
+  const [productsList, setProductToList] = useState<Product[]>(products);
 
-  const fitleredProductsBySelect = productsList.filter((product) => (
-    product.selected
-  ));
+  const fitleredProductsBySelect: Product[] = productsList.filter(
+    (product: Product) => (
+      product.selected
+    ),
+  );
 
   useEffect(() => {
     setProductToList(products.filter(
-      (product) => product.selected === true,
+      (product) => product.selected,
     ));
   }, [products]);
 

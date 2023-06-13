@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react';
 import './TodoFilter.scss';
 
 import { ProductContext } from '../ProductContext';
+import { Product } from '../types/Product';
 
 export const TodoFilter: React.FC = () => {
   const {
@@ -11,10 +12,10 @@ export const TodoFilter: React.FC = () => {
     showAll,
   } = useContext(ProductContext);
 
-  const [filterToggler, switchFilterToggler] = useState(false);
-  const [touchedSelect, setTouchSelect] = useState(false);
+  const [filterToggler, switchFilterToggler] = useState<boolean>(false);
+  const [touchedSelect, setTouchSelect] = useState<boolean>(false);
 
-  const productList = products.filter((product) => product.selected);
+  const productList = products.filter((product: Product) => product.selected);
 
   return (
     <article className="TodoFilter">
